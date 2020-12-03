@@ -94,4 +94,92 @@ void main() {
       },
     );
   });
+
+  group('convertFromMap', () {
+    test(
+      'должен выбросить ошибку, если передан null',
+      () async {
+        try {
+          // act
+          converter.convertFromMap(null);
+        } catch (e) {
+          // assert
+          expect(e, isA<ArgumentError>());
+        }
+      },
+    );
+
+    test(
+      'должен корректно конвертировать данные из словаря',
+      () async {
+        // arrange
+        final data = {
+          'age': 21,
+          'specialization': 'Мобильная разработка',
+          'education': 'Высшее техническое',
+          'firstName': 'Алексей',
+          'lastName': 'Адрианов',
+          'middleName': 'Сергеевич',
+        };
+
+        // act
+        final emp = converter.convertFromMap(data);
+
+        // assert
+        expect(emp.age, 21);
+        expect(emp.specialization, 'Мобильная разработка');
+        expect(emp.education, 'Высшее техническое');
+        expect(emp.lastName, 'Адрианов');
+        expect(emp.firstName, 'Алексей');
+        expect(emp.middleName, 'Сергеевич');
+      },
+    );
+  });
+
+
+  group('convertToMap', () {
+    test(
+      'должен выбросить ошибку, если передан null',
+      () async {
+        try {
+          // act
+          converter.convertToMap(null);
+        } catch (e) {
+          // assert
+          expect(e, isA<ArgumentError>());
+        }
+      },
+    );
+
+
+    test(
+      'должен корректно конвертировать данные в словарь',
+      () async {
+        // arrange
+        final data = {
+          'age': 21,
+          'specialization': 'Мобильная разработка',
+          'education': 'Высшее техническое',
+          'firstName': 'Алексей',
+          'lastName': 'Адрианов',
+          'middleName': 'Сергеевич',
+        };
+
+        final emp = Employee(
+          age: 21,
+          middleName: 'Сергеевич',
+          lastName: 'Адрианов',
+          firstName: 'Алексей',
+          education: 'Высшее техническое',
+          specialization: 'Мобильная разработка',
+        );
+
+        // act
+        final map = converter.convertToMap(emp);
+
+        // assert
+        expect(map, equals(data));
+      },
+    );
+  });
 }

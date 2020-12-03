@@ -34,6 +34,33 @@ class PositionJsonConverter extends EntityConverter<Position> {
 
     return json.encode(data);
   }
+
+  @override
+  Position convertFromMapImpl(Map<String, dynamic> map) {
+    return Position(
+      title: map['title'],
+      department: map['department'],
+      requirements:
+          requirementsConverter.convertFromString(map['requirements']),
+      salary: map['salary'],
+      workplaceCount: map['workplaceCount'],
+    );
+  }
+
+  @override
+  Map<String, dynamic> convertToMapImpl(Position pos) {
+    return {
+      'title': pos.title,
+      'department': pos.department,
+      'salary': pos.salary,
+      'workplaceCount': pos.workplaceCount,
+      'requirements': requirementsConverter.convertToString(pos.requirements),
+    };
+  }
+
+  @override
+  List<String> get fieldNames =>
+      ['title', 'department', 'salary', 'workplaceCount', 'requirements'];
 }
 
 /// JSON конвертер для требований к должности в компании
@@ -62,4 +89,17 @@ class PositionRequirementsJsonConverter
 
     return json.encode(data);
   }
+
+  @override
+  PositionRequirements convertFromMapImpl(Map<String, dynamic> map) {
+    throw UnimplementedError();
+  }
+
+  @override
+  Map<String, dynamic> convertToMapImpl(PositionRequirements entity) {
+    throw UnimplementedError();
+  }
+
+  @override
+  List<String> get fieldNames => throw UnimplementedError();
 }

@@ -90,6 +90,35 @@ void main() {
     );
   });
 
+  group('PositionRequirementsJsonConverter convert(To/From)Map', () {
+    test(
+      'должен выбрасывать ошибку, что метод convertToMap не реализован',
+      () async {
+        try {
+          // act
+          requirementsConverter.convertToMap(
+              PositionRequirements(education: '', specialization: ''));
+        } catch (e) {
+          // assert
+          expect(e, isA<UnimplementedError>());
+        }
+      },
+    );
+
+    test(
+      'должен выбрасывать ошибку, что метод convertFromMap не реализован',
+      () async {
+        try {
+          // act
+          requirementsConverter.convertFromMap(<String, dynamic>{});
+        } catch (e) {
+          // assert
+          expect(e, isA<UnimplementedError>());
+        }
+      },
+    );
+  });
+
   group('PositionJsonConverter.convertFromString', () {
     test(
       'должен выбросить ошибку, если передан null',
@@ -176,6 +205,97 @@ void main() {
         final str = positionConverter.convertToString(pos);
         // assert
         expect(str, json.encode(data));
+      },
+    );
+  });
+
+  group('PositionJsonConverter.convertToMap', () {
+    test(
+      'должен выбросить ошибку, если передан null',
+          () async {
+        try {
+          // act
+          positionConverter.convertToMap(null);
+        } catch (e) {
+          // assert
+          expect(e, isA<ArgumentError>());
+        }
+      },
+    );
+
+    test(
+      'должен корректно конвертировать данные в словарь',
+          () async {
+        // arrange
+        final data = {
+          'title': 'Flutter разработчик',
+          'department': 'Отдел разработки',
+          'salary': 70000.0,
+          'workplaceCount': 2,
+          'requirements':
+          '{"education":"Высшее, техническое","specialization":"Мобильная разработка","maxAge":null,"minAge":null}',
+        };
+        final req = PositionRequirements(
+          education: 'Высшее, техническое',
+          specialization: 'Мобильная разработка',
+        );
+        final pos = Position(
+          title: 'Flutter разработчик',
+          department: 'Отдел разработки',
+          salary: 70000.0,
+          workplaceCount: 2,
+          requirements: req,
+        );
+
+        // act
+        final map = positionConverter.convertToMap(pos);
+        // assert
+        expect(map, equals(data));
+      },
+    );
+  });
+
+
+  group('PositionJsonConverter.convertFromMap', () {
+    test(
+      'должен выбросить ошибку, если передан null',
+          () async {
+        try {
+          // act
+          positionConverter.convertFromMap(null);
+        } catch (e) {
+          // assert
+          expect(e, isA<ArgumentError>());
+        }
+      },
+    );
+
+    test(
+      'должен корректно конвертировать данные из словаря',
+          () async {
+        // arrange
+        final data = {
+          'title': 'Flutter разработчик',
+          'department': 'Отдел разработки',
+          'salary': 70000.0,
+          'workplaceCount': 2,
+          'requirements':
+          '{"education":"Высшее, техническое","specialization":"Мобильная разработка","maxAge":60,"minAge":20}',
+        };
+
+        // act
+        final pos = positionConverter.convertFromMap(data);
+        final req = pos.requirements;
+
+        // assert
+        expect(pos.title, 'Flutter разработчик');
+        expect(pos.department, 'Отдел разработки');
+        expect(pos.salary, 70000.0);
+        expect(pos.workplaceCount, 2);
+        expect(req.education, 'Высшее, техническое');
+        expect(req.specialization, 'Мобильная разработка');
+        expect(req.maxAge, 60);
+        expect(req.minAge, 20);
       },
     );
   });
