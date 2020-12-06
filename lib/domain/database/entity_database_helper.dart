@@ -18,4 +18,11 @@ mixin EntityDatabaseHelper on CompanyDatabase {
     final db = await database;
     return await db.insert(tableName, converter.convertToMap(entity));
   }
+
+  /// Удаление записи из таблицы
+  Future<int> deleteEntity(
+      String tableName, String where, List<dynamic> whereArgs) async {
+    final db = await database;
+    return await db.delete(tableName, where: where, whereArgs: whereArgs);
+  }
 }

@@ -13,6 +13,9 @@ class CompanyDatabaseImpl extends CompanyDatabase with EntityDatabaseHelper {
   static const EMPLOYEE_TABLE = 'Employees';
   static const POSITION_TABLE = 'Positions';
 
+  /// Смежная таблица, которая показывает, какой сотруднк, какую должность занимает
+  static const CROSS_TABLE = 'EmployeePosition';
+
   final EntityConverter<Employee> employeeConverter;
   final EntityConverter<Position> positionConverter;
   final PathProvider pathProvider;
@@ -29,6 +32,13 @@ class CompanyDatabaseImpl extends CompanyDatabase with EntityDatabaseHelper {
       getEntities<Employee>(employeeConverter, EMPLOYEE_TABLE, offset, limit);
 
   @override
+  Future<int> deleteEmployee(Employee emp) => deleteEntity(
+        EMPLOYEE_TABLE,
+        'firstName = ?, lastName = ?, middleName = ?, age = ?',
+        [emp.firstName, emp.lastName, emp.middleName, emp.age],
+      );
+
+  @override
   Future<int> addPosition(Position pos) =>
       addEntity<Position>(positionConverter, POSITION_TABLE, pos);
 
@@ -43,13 +53,13 @@ class CompanyDatabaseImpl extends CompanyDatabase with EntityDatabaseHelper {
       await db.execute(
         '''
         CREATE TABLE IF NOT EXISTS $EMPLOYEE_TABLE (
-          employee_id      INTEGER PRIMARY KEY NOT NULL,
-          age    TEXT NOT NULL,
-          specialization    TEXT NOT NULL,
-          education    TEXT NOT NULL,
-          firstName    TEXT NOT NULL,
-          lastName    TEXT NOT NULL,
-          middleName    TEXT NOT NULL,
+          employee_id     INTEGER PRIMARY KEY NOT NULL,
+          age             TEXT NOT NULL,
+          specialization  TEXT NOT NULL,
+          education       TEXT NOT NULL,
+          firstName       TEXT NOT NULL,
+          lastName        TEXT NOT NULL,
+          middleName      TEXT NOT NULL,
         )''',
       );
 
@@ -64,6 +74,50 @@ class CompanyDatabaseImpl extends CompanyDatabase with EntityDatabaseHelper {
           requirements    TEXT NOT NULL,
         )''',
       );
+
+      await db.execute(
+        '''
+        CREATE TABLE IF NOT EXISTS $CROSS_TABLE (
+          id            INTEGER PRIMARY KEY NOT NULL,
+          employee_id   INTEGER NOT NULL,
+          position_id   INTEGER NOT NULL,
+          
+          FOREIGN KEY (employee_id)
+            REFERENCES Employee(employee_id)
+              ON UPDATE NO ACTION
+              ON DELETE CASCADE
+          FOREIGN KEY (position_id)
+            REFERENCES Position(position_id)
+              ON UPDATE NO ACTION
+              ON DELETE CASCADE
+        )''',
+      );
     });
+  }
+
+  @override
+  Future<void> calculateMonthSalary() {
+    return null;
+  }
+
+  @override
+  Future<int> deletePosition(Position pos) => deleteEntity(
+        POSITION_TABLE,
+        'title = ?, department = ?, salary = ?',
+        [pos.title, pos.department, pos.salary],
+      );
+
+  @override
+  Future<List<Position>> getOpenPositions() async {
+    final db = await database;
+    final data = await db.rawQuery(
+      '''
+      SELECT * FROM $POSITION_TABLE 
+      WHERE position_id NOT IN (SELECT position_id FROM $CROSS_TABLE)
+      ''',
+    );
+    return data
+        .map<Position>((e) => positionConverter.convertFromMap(e))
+        .toList();
   }
 }
