@@ -3,6 +3,7 @@ import 'package:meta/meta.dart';
 
 /// Сущность работника
 class Employee extends Equatable {
+  final int id;
   final String firstName;
   final String lastName;
   final String middleName;
@@ -11,6 +12,7 @@ class Employee extends Equatable {
   final String specialization;
 
   Employee({
+    @required this.id,
     @required this.firstName,
     @required this.lastName,
     @required this.middleName,
@@ -21,5 +23,5 @@ class Employee extends Equatable {
 
   @override
   List<Object> get props =>
-      [firstName, lastName, middleName, age, education, specialization];
+      [id, firstName, lastName, middleName, age, education, specialization];
 }

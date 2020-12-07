@@ -29,6 +29,7 @@ void main() {
       () async {
         // arrange
         final data = {
+          'id': 13,
           'age': 21,
           'specialization': 'Мобильная разработка',
           'education': 'Высшее техническое',
@@ -41,6 +42,7 @@ void main() {
         final emp = converter.convertFromString(json.encode(data));
 
         // assert
+        expect(emp.id, 13);
         expect(emp.age, 21);
         expect(emp.specialization, 'Мобильная разработка');
         expect(emp.education, 'Высшее техническое');
@@ -70,6 +72,7 @@ void main() {
       () async {
         // arrange
         final data = {
+          'id': 13,
           'age': 21,
           'specialization': 'Мобильная разработка',
           'education': 'Высшее техническое',
@@ -78,6 +81,7 @@ void main() {
           'middleName': 'Сергеевич',
         };
         final emp = Employee(
+          id: 13,
           age: 21,
           middleName: 'Сергеевич',
           lastName: 'Адрианов',
@@ -114,6 +118,7 @@ void main() {
       () async {
         // arrange
         final data = {
+          'id': 13,
           'age': 21,
           'specialization': 'Мобильная разработка',
           'education': 'Высшее техническое',
@@ -126,6 +131,7 @@ void main() {
         final emp = converter.convertFromMap(data);
 
         // assert
+        expect(emp.id, 13);
         expect(emp.age, 21);
         expect(emp.specialization, 'Мобильная разработка');
         expect(emp.education, 'Высшее техническое');
@@ -157,6 +163,7 @@ void main() {
       () async {
         // arrange
         final data = {
+          'id': 13,
           'age': 21,
           'specialization': 'Мобильная разработка',
           'education': 'Высшее техническое',
@@ -166,6 +173,7 @@ void main() {
         };
 
         final emp = Employee(
+          id: 13,
           age: 21,
           middleName: 'Сергеевич',
           lastName: 'Адрианов',

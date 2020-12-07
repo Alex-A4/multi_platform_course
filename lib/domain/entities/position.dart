@@ -3,6 +3,7 @@ import 'package:meta/meta.dart';
 
 /// Сущность должности в компании
 class Position extends Equatable {
+  final int id;
   final String title;
   final String department;
   final double salary;
@@ -10,6 +11,7 @@ class Position extends Equatable {
   final PositionRequirements requirements;
 
   Position({
+    @required this.id,
     @required this.title,
     @required this.department,
     @required this.salary,
@@ -19,7 +21,7 @@ class Position extends Equatable {
 
   @override
   List<Object> get props =>
-      [title, department, salary, workplaceCount, requirements];
+      [id, title, department, salary, workplaceCount, requirements];
 }
 
 /// Сущность требований к должности

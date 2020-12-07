@@ -138,6 +138,7 @@ void main() {
       () async {
         // arrange
         final data = {
+          'id': 13,
           'title': 'Flutter разработчик',
           'department': 'Отдел разработки',
           'salary': 70000.0,
@@ -151,6 +152,7 @@ void main() {
         final req = pos.requirements;
 
         // assert
+        expect(pos.id, 13);
         expect(pos.title, 'Flutter разработчик');
         expect(pos.department, 'Отдел разработки');
         expect(pos.salary, 70000.0);
@@ -182,6 +184,7 @@ void main() {
       () async {
         // arrange
         final data = {
+          'id': 13,
           'title': 'Flutter разработчик',
           'department': 'Отдел разработки',
           'salary': 70000.0,
@@ -194,6 +197,7 @@ void main() {
           specialization: 'Мобильная разработка',
         );
         final pos = Position(
+          id: 13,
           title: 'Flutter разработчик',
           department: 'Отдел разработки',
           salary: 70000.0,
@@ -228,6 +232,7 @@ void main() {
           () async {
         // arrange
         final data = {
+          'id': 13,
           'title': 'Flutter разработчик',
           'department': 'Отдел разработки',
           'salary': 70000.0,
@@ -240,6 +245,7 @@ void main() {
           specialization: 'Мобильная разработка',
         );
         final pos = Position(
+          id: 13,
           title: 'Flutter разработчик',
           department: 'Отдел разработки',
           salary: 70000.0,
@@ -275,6 +281,7 @@ void main() {
           () async {
         // arrange
         final data = {
+          'id': 13,
           'title': 'Flutter разработчик',
           'department': 'Отдел разработки',
           'salary': 70000.0,
@@ -288,6 +295,7 @@ void main() {
         final req = pos.requirements;
 
         // assert
+        expect(pos.id, 13);
         expect(pos.title, 'Flutter разработчик');
         expect(pos.department, 'Отдел разработки');
         expect(pos.salary, 70000.0);
