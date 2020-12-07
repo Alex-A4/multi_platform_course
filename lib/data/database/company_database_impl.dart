@@ -165,4 +165,26 @@ class CompanyDatabaseImpl extends CompanyDatabase with EntityDatabaseHelper {
     } else
       throw Exception('Employee or position already engaged');
   }
+
+  @override
+  Future<List<Employee>> getSortedEmployees(
+      SortType sort, SortField field, int offset, int limit) async {
+    final db = await database;
+    String sortField = field.name;
+    String sortType = sort.name;
+
+    final data = await db.rawQuery(
+      '''
+      SELECT * FROM $EMPLOYEE_TABLE
+      INNER JOIN $CROSS_TABLE as cross ON
+        cross.employee_id = $EMPLOYEE_TABLE.employee_id
+      INNER JOIN $POSITION_TABLE as pos ON
+        pos.position_id = cross.position_id
+      ORDER BY $sortField $sortType;
+      ''',
+    );
+    return data
+        .map<Employee>((e) => employeeConverter.convertFromMap(e))
+        .toList();
+  }
 }

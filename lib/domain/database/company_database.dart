@@ -48,5 +48,36 @@ abstract class CompanyDatabase {
   /// Получение списка не занятых должностей (в кросс-таблице нет данных по ним)
   Future<List<Position>> getOpenPositions();
 
+  /// Получение сотрудников(заняты должности) с сортировкой [sort].
+  Future<List<Employee>> getSortedEmployees(
+      SortType sort, SortField field, int offset, int limit);
+
   Future<void> calculateMonthSalary();
+}
+
+enum SortField { Position, LastName }
+enum SortType { ASC, DESC }
+
+extension SortFieldName on SortField {
+  String get name {
+    switch (this) {
+      case SortField.Position:
+        return 'Positions.title';
+      case SortField.LastName:
+        return 'Employees.lastName';
+    }
+    return null;
+  }
+}
+
+extension SortTypeName on SortType {
+  String get name {
+    switch (this) {
+      case SortType.ASC:
+        return 'ASC';
+      case SortType.DESC:
+        return 'DESC';
+    }
+    return null;
+  }
 }
