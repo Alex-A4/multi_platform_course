@@ -33,4 +33,21 @@ class CompanyRepositoryImpl extends CompanyRepository {
 
   @override
   Future<List<Position>> getOpenPositions() => database.getOpenPositions();
+
+  @override
+  Future<Employee> getEmployeeAtPosition(Position pos) =>
+      database.getEmployeeAtPosition(pos);
+
+  @override
+  Future<Position> getEmployeePosition(Employee emp) =>
+      database.getEmployeePosition(emp);
+
+  @override
+  Future<List<Employee>> getSortedEmployees(
+          SortType sort, SortField field, int offset, int limit) =>
+      database.getSortedEmployees(sort, field, offset, limit);
+
+  @override
+  Future<void> linkPositionAndEmployee(Position pos, Employee emp) =>
+      database.linkPositionAndEmployee(pos, emp);
 }

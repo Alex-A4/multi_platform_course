@@ -1,3 +1,4 @@
+import 'package:multi_platform_course/domain/database/company_database.dart';
 import 'package:multi_platform_course/domain/entities/employee.dart';
 import 'package:multi_platform_course/domain/entities/position.dart';
 
@@ -23,4 +24,19 @@ abstract class CompanyRepository {
 
   /// Получение списка открытых вакансий
   Future<List<Position>> getOpenPositions();
+
+  /// Получение позиции, на которой работает указанный сотрудник.
+  /// Возвращает null, если позиция не указана.
+  Future<Position> getEmployeePosition(Employee emp);
+
+  /// Получение работника, который работает на данной должности.
+  /// Возвращает null, если работника такого нет.
+  Future<Employee> getEmployeeAtPosition(Position pos);
+
+  /// Связываем работника и должность
+  Future<void> linkPositionAndEmployee(Position pos, Employee emp);
+
+  /// Получение сотрудников(заняты должности) с сортировкой [sort].
+  Future<List<Employee>> getSortedEmployees(
+      SortType sort, SortField field, int offset, int limit);
 }
