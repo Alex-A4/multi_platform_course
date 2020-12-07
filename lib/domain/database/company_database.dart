@@ -25,6 +25,10 @@ abstract class CompanyDatabase {
   /// Удаление сотрудника
   Future<int> deleteEmployee(Employee emp);
 
+  /// Получение позиции, на которой работает указанный сотрудник.
+  /// Возвращает null, если позиция не указана.
+  Future<Position> getEmployeePosition(Employee emp);
+
   /// Получение списка должностей
   Future<List<Position>> getPositions(int offset, int limit);
 
@@ -33,6 +37,13 @@ abstract class CompanyDatabase {
 
   /// Удаление должности
   Future<int> deletePosition(Position pos);
+
+  /// Получение работника, который работает на данной должности.
+  /// Возвращает null, если работника такого нет.
+  Future<Employee> getEmployeeAtPosition(Position pos);
+
+  /// Связываем работника и должность
+  Future<void> linkPositionAndEmployee(Position pos, Employee emp);
 
   /// Получение списка не занятых должностей (в кросс-таблице нет данных по ним)
   Future<List<Position>> getOpenPositions();

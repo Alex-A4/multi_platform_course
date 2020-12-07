@@ -120,4 +120,49 @@ class CompanyDatabaseImpl extends CompanyDatabase with EntityDatabaseHelper {
         .map<Position>((e) => positionConverter.convertFromMap(e))
         .toList();
   }
+
+  @override
+  Future<Employee> getEmployeeAtPosition(Position pos) async {
+    final db = await database;
+    final data = await db.rawQuery(
+      '''
+      SELECT * FROM $EMPLOYEE_TABLE
+        INNER JOIN $CROSS_TABLE as cross ON
+          cross.employee_id = $EMPLOYEE_TABLE.employee_id
+        INNER JOIN $POSITION_TABLE as pos ON
+          pos.position_id = cross.position_id AND pos.position_id = ${pos.id}
+      ''',
+    );
+    if (data.isEmpty) return null;
+    return employeeConverter.convertFromMap(data.first);
+  }
+
+  @override
+  Future<Position> getEmployeePosition(Employee emp) async {
+    final db = await database;
+    final data = await db.rawQuery(
+      '''
+      SELECT * FROM $POSITION_TABLE
+        INNER JOIN $CROSS_TABLE as cross ON
+          cross.position_id = $POSITION_TABLE.position_id
+        INNER JOIN $EMPLOYEE_TABLE as emp ON
+          emp.employee_id = cross.employee_id AND emp.employee_id = ${emp.id}
+      ''',
+    );
+    if (data.isEmpty) return null;
+    return positionConverter.convertFromMap(data.first);
+  }
+
+  @override
+  Future<void> linkPositionAndEmployee(Position pos, Employee emp) async {
+    if (await getEmployeePosition(emp) == null &&
+        await getEmployeeAtPosition(pos) == null) {
+      final db = await database;
+      await db.insert(
+        CROSS_TABLE,
+        {'employee_id': emp.id, 'position_id': pos.id},
+      );
+    } else
+      throw Exception('Employee or position already engaged');
+  }
 }
