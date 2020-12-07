@@ -13,6 +13,7 @@ class PositionJsonConverter extends EntityConverter<Position> {
     final map = json.decode(str);
 
     return Position(
+      id: map['id'],
       title: map['title'],
       department: map['department'],
       requirements:
@@ -25,6 +26,7 @@ class PositionJsonConverter extends EntityConverter<Position> {
   @override
   String convertToStringImpl(Position pos) {
     final data = {
+      'id': pos.id,
       'title': pos.title,
       'department': pos.department,
       'salary': pos.salary,
@@ -38,6 +40,7 @@ class PositionJsonConverter extends EntityConverter<Position> {
   @override
   Position convertFromMapImpl(Map<String, dynamic> map) {
     return Position(
+      id: map['id'],
       title: map['title'],
       department: map['department'],
       requirements:
@@ -50,6 +53,7 @@ class PositionJsonConverter extends EntityConverter<Position> {
   @override
   Map<String, dynamic> convertToMapImpl(Position pos) {
     return {
+      'id': pos.id,
       'title': pos.title,
       'department': pos.department,
       'salary': pos.salary,
@@ -60,7 +64,7 @@ class PositionJsonConverter extends EntityConverter<Position> {
 
   @override
   List<String> get fieldNames =>
-      ['title', 'department', 'salary', 'workplaceCount', 'requirements'];
+      ['id', 'title', 'department', 'salary', 'workplaceCount', 'requirements'];
 }
 
 /// JSON конвертер для требований к должности в компании

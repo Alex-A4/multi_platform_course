@@ -9,6 +9,7 @@ class EmployeeJsonConverter extends EntityConverter<Employee> {
     final map = json.decode(str);
 
     return Employee(
+      id: map['id'],
       age: map['age'],
       specialization: map['specialization'],
       education: map['education'],
@@ -21,6 +22,7 @@ class EmployeeJsonConverter extends EntityConverter<Employee> {
   @override
   String convertToStringImpl(Employee emp) {
     final data = {
+      'id': emp.id,
       'age': emp.age,
       'specialization': emp.specialization,
       'education': emp.education,
@@ -35,6 +37,7 @@ class EmployeeJsonConverter extends EntityConverter<Employee> {
   @override
   Employee convertFromMapImpl(Map<String, dynamic> map) {
     return Employee(
+      id: map['id'],
       age: map['age'],
       specialization: map['specialization'],
       education: map['education'],
@@ -47,6 +50,7 @@ class EmployeeJsonConverter extends EntityConverter<Employee> {
   @override
   Map<String, dynamic> convertToMapImpl(Employee emp) {
     return {
+      'id': emp.id,
       'age': emp.age,
       'specialization': emp.specialization,
       'education': emp.education,
@@ -58,6 +62,7 @@ class EmployeeJsonConverter extends EntityConverter<Employee> {
 
   @override
   List<String> get fieldNames => [
+        'id',
         'age',
         'specialization',
         'education',
