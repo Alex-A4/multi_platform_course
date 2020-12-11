@@ -21,7 +21,7 @@ void initServiceLocator() {
   sl.registerFactory<EntityConverter<PositionRequirements>>(
       () => PositionRequirementsJsonConverter());
   sl.registerFactory<EntityConverter<Position>>(
-      () => PositionJsonConverter(sl()));
+      () => PositionJsonConverter(sl<EntityConverter<PositionRequirements>>()));
 
   /// Database
   sl.registerSingleton<CompanyDatabase>(CompanyDatabaseImpl(sl(), sl(), sl()));
