@@ -24,7 +24,16 @@ class MainPageBottomBar extends StatelessWidget {
           index = 1;
         }
 
-        return BottomNavigationBar(items: items, currentIndex: index);
+        return BottomNavigationBar(
+          items: items,
+          currentIndex: index,
+          onTap: (i) {
+            if (i == 0)
+              bloc.add(MainBlocOpenEmployees());
+            else
+              bloc.add(MainBlocOpenPositions());
+          },
+        );
       },
     );
   }
