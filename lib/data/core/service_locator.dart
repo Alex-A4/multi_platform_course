@@ -1,4 +1,5 @@
 import 'package:get_it/get_it.dart';
+import 'package:multi_platform_course/app/widgets/employee_page/bloc/basic_page/bloc.dart';
 import 'package:multi_platform_course/app/widgets/main_page/bloc/bloc.dart';
 import 'package:multi_platform_course/data/database/company_database_impl.dart';
 import 'package:multi_platform_course/data/providers/path_provider_impl.dart';
@@ -31,4 +32,5 @@ void initServiceLocator() {
 
   /// Bloc
   sl.registerFactory<MainBloc>(() => MainBloc());
+  sl.registerFactory<SimpleEmployeeBloc>(() => SimpleEmployeeBloc(sl()));
 }
