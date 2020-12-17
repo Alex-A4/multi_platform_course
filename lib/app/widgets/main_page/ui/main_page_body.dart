@@ -43,7 +43,7 @@ class MainPageBody extends StatelessWidget {
       ),
       ActionCard(
         title: 'Посмотреть работников с фильтрами',
-        action: () {},
+        action: () => Navigator.of(context).pushNamed(EMPLOYEES_VIEW_FILTER),
       ),
       ActionCard(
         title: 'Добавить работника',
