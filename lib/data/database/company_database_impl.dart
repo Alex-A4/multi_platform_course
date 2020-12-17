@@ -169,10 +169,11 @@ class CompanyDatabaseImpl extends CompanyDatabase with EntityDatabaseHelper {
 
     final data = await db.rawQuery(
       '''
-      SELECT * FROM $EMPLOYEE_TABLE
-      INNER JOIN $CROSS_TABLE as cross ON
-        cross.employee_id = $EMPLOYEE_TABLE.employee_id
-      INNER JOIN $POSITION_TABLE as pos ON
+      SELECT pos.title, e.employee_id, e.age, e.specialization, e.education, e.firstName,
+        e.lastName, e.middleName FROM $EMPLOYEE_TABLE as e
+      LEFT JOIN $CROSS_TABLE as cross ON
+        cross.employee_id = e.employee_id
+      LEFT JOIN $POSITION_TABLE as pos ON
         pos.position_id = cross.position_id
       ORDER BY $sortField $sortType;
       ''',

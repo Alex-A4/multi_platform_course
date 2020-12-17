@@ -62,9 +62,9 @@ extension SortFieldName on SortField {
   String get name {
     switch (this) {
       case SortField.Position:
-        return 'Positions.title';
+        return 'pos.title';
       case SortField.LastName:
-        return 'Employees.lastName';
+        return 'e.lastName';
     }
     return null;
   }
