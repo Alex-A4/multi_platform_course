@@ -23,20 +23,20 @@ class SimpleEmployeeBloc
         final newData = await repository.getEmployees(employees.length, 15);
         if (newData.isNotEmpty) {
           employees.addAll(newData);
-          yield SimpleEmployeeBlocDataState(employees);
+          yield SimpleEmployeeBlocDataState(List.from(employees));
         } else {
-          yield SimpleEmployeeBlocDataState(employees, true);
+          yield SimpleEmployeeBlocDataState(List.from(employees), true);
         }
       } catch (e) {
         print(e);
-        yield SimpleEmployeeBlocDataState(employees, true);
+        yield SimpleEmployeeBlocDataState(List.from(employees), true);
       }
     }
     if (event is SimpleEmployeeBlocDeleteEvent) {
       print(event.employee.id);
       await repository.deleteEmployee(event.employee);
       print(employees.remove(event.employee));
-      yield SimpleEmployeeBlocDataState(employees);
+      yield SimpleEmployeeBlocDataState(List.from(employees));
     }
   }
 }
