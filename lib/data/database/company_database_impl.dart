@@ -32,11 +32,8 @@ class CompanyDatabaseImpl extends CompanyDatabase with EntityDatabaseHelper {
       getEntities<Employee>(employeeConverter, EMPLOYEE_TABLE, offset, limit);
 
   @override
-  Future<int> deleteEmployee(Employee emp) => deleteEntity(
-        EMPLOYEE_TABLE,
-        'firstName = ?, lastName = ?, middleName = ?, age = ?',
-        [emp.firstName, emp.lastName, emp.middleName, emp.age],
-      );
+  Future<int> deleteEmployee(Employee emp) =>
+      deleteEntity(EMPLOYEE_TABLE, 'employee_id = ?', [emp.id]);
 
   @override
   Future<int> addPosition(Position pos) =>
@@ -101,11 +98,8 @@ class CompanyDatabaseImpl extends CompanyDatabase with EntityDatabaseHelper {
   }
 
   @override
-  Future<int> deletePosition(Position pos) => deleteEntity(
-        POSITION_TABLE,
-        'title = ?, department = ?, salary = ?',
-        [pos.title, pos.department, pos.salary],
-      );
+  Future<int> deletePosition(Position pos) =>
+      deleteEntity(POSITION_TABLE, 'position_id = ?', [pos.id]);
 
   @override
   Future<List<Position>> getOpenPositions() async {
