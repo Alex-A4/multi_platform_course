@@ -54,12 +54,12 @@ class CompanyDatabaseImpl extends CompanyDatabase with EntityDatabaseHelper {
         '''
         CREATE TABLE IF NOT EXISTS $EMPLOYEE_TABLE (
           employee_id     INTEGER PRIMARY KEY NOT NULL,
-          age             TEXT NOT NULL,
+          age             INTEGER NOT NULL,
           specialization  TEXT NOT NULL,
           education       TEXT NOT NULL,
           firstName       TEXT NOT NULL,
           lastName        TEXT NOT NULL,
-          middleName      TEXT NOT NULL,
+          middleName      TEXT NOT NULL
         )''',
       );
 
@@ -71,7 +71,7 @@ class CompanyDatabaseImpl extends CompanyDatabase with EntityDatabaseHelper {
           department      TEXT NOT NULL,
           salary          REAL NOT NULL,
           workplaceCount  INTEGER NOT NULL,
-          requirements    TEXT NOT NULL,
+          requirements    TEXT NOT NULL
         )''',
       );
 
