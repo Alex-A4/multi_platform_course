@@ -47,7 +47,7 @@ class MainPageBody extends StatelessWidget {
       ),
       ActionCard(
         title: 'Добавить работника',
-        action: () {},
+        action: () => Navigator.of(context).pushNamed(EMPLOYEE_ADD),
       ),
     ];
   }
