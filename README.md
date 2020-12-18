@@ -3,6 +3,8 @@
 
 Архитектура проекта выполнена согласно [Clean для Flutter](https://www.youtube.com/watch?v=dc3B_mMrZ-Q&list=PLB6lc7nQ1n4iYGE_khpXRdJkJEp9WOech&index=15).
 
+Скачать apk файл можно по [ссылке](https://yadi.sk/d/vbG4EH9gwKldrg?w=1).
+Присутствует сборка на 32 и 64 битные процессоры.
 
 # Задача 10 
 Написать программу, моделирующую работу отдела кадров. Сведения о
