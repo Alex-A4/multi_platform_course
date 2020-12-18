@@ -59,12 +59,12 @@ class MainPageBody extends StatelessWidget {
         action: () => Navigator.of(context).pushNamed(POSITION_VIEW),
       ),
       ActionCard(
-        title: 'Добавить должность',
-        action: () {},
+        title: 'Посмотреть открытые вакансии',
+        action: () => Navigator.of(context).pushNamed(POSITION_VIEW_OPEN),
       ),
       ActionCard(
-        title: 'Посмотреть открытые вакансии',
-        action: () {},
+        title: 'Добавить должность',
+        action: () => Navigator.of(context).pushNamed(POSITION_ADD),
       ),
     ];
   }
